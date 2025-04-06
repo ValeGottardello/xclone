@@ -6,22 +6,39 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gen": "npx supabase gen types typescript --project-id zbnmvmhkwoagmiasqhsb > ./src/app/types/database.ts"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@heroicons/react": "^2.2.0",
+    "@mui/joy": "5.0.0-beta.52",
+    "@mui/material": "^7.0.1",
+    "@supabase/ssr": "^0.6.1",
+    "@supabase/supabase-js": "^2.49.4",
+    "@tabler/icons-react": "^3.31.0",
+    "autoprefixer": "^10.4.21",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "framer-motion": "^12.6.2",
+    "next": "15.2.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.2.4"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@eslint/js": "^9.23.0",
+    "@tailwindcss/postcss": "^4.0.17",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
-    "eslint": "^9",
+    "eslint": "^9.23.0",
     "eslint-config-next": "15.2.4",
-    "@eslint/eslintrc": "^3"
+    "eslint-plugin-react": "^7.37.4",
+    "globals": "^16.0.0",
+    "tailwindcss": "^4.0.17",
+    "typescript": "^5",
+    "typescript-eslint": "^8.29.0"
   }
 }
