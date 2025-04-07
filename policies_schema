@@ -1,0 +1,51 @@
+
+
+CREATE POLICY likes_select_policy
+  ON likes
+  FOR SELECT
+  USING (
+    user_id = auth.uid() OR post_id IS NOT NULL
+  );
+  
+CREATE POLICY likes_insert_policy
+  ON likes
+  FOR INSERT
+  WITH CHECK (
+    user_id = auth.uid() AND post_id IS NOT NULL
+  );
+
+CREATE POLICY likes_select_policy
+  ON likes
+  FOR SELECT
+  USING (
+    user_id = auth.uid() OR post_id IS NOT NULL
+  );
+
+
+CREATE POLICY comments_insert_policy
+  ON comments
+  FOR INSERT
+  WITH CHECK (
+    comment_user_id = auth.uid() AND commented_post_id IS NOT NULL
+  );
+
+CREATE POLICY comments_select_policy
+  ON comments
+  FOR SELECT
+  USING (
+    comment_user_id = auth.uid() OR commented_post_id IS NOT NULL
+  );
+
+CREATE POLICY follows_insert_policy
+  ON follows
+  FOR INSERT
+  WITH CHECK (
+    follower_id = auth.uid() AND following_id = auth.uid()
+  );
+
+CREATE POLICY follows_select_policy
+  ON follows
+  FOR SELECT
+  USING (
+    follower_id = auth.uid() OR following_id = auth.uid()
+  );

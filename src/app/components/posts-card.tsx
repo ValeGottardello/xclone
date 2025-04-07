@@ -10,10 +10,11 @@ import CardContent from '@mui/joy/CardContent';
 import Link from '@mui/joy/Link';
 import Typography from '@mui/joy/Typography';
 
-import { IconRepeat, IconHeart, IconHeartFilled, IconMessageCircle } from '@tabler/icons-react';
+import { IconRepeat, IconHeart, IconMessageCircle } from '@tabler/icons-react';
 
 import { formatDistanceToNow } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
+import { Container } from "@mui/material";
 
 
 export function PostCard({ 
@@ -22,14 +23,17 @@ export function PostCard({
     avatarUrl,
     postContent,
     userFullName,
+    likes,
+    comments,
 } : {
-    id: string;
+    createdAt: string;
     userName: string;
     avatarUrl: string;
     postContent: string;
     userFullName: string;
+    likes: Array<{ userId: string; postId: string }>;
+    comments: Array<{ userId: string; postId: string; commentContent: string; createdAt: string }>;
 }) {  
-
 
   const [timeAgo, setTimeAgo] = useState<string | null>(null);
   useEffect(() => {
@@ -44,11 +48,6 @@ export function PostCard({
     setIsExpanded(!isExpanded);
   }
 
-  // state for likes
-  // link to profile page
-  //functionality to like and unlike post
-  //functionality to  follow and unfollow user
-  
   return (
     <Card
     sx={{
@@ -138,7 +137,7 @@ export function PostCard({
           startDecorator="…"
           onClick={handleReadMore} 
           className="read-more-btn"
-          sx={{ fontSize: 'sm', color: 'text.tertiary', justifyContent: 'flex-end'  }}
+          sx={{ fontSize: 'sm', color: '#0ea5e9', justifyContent: 'flex-end' }}
         >
           {isExpanded ? 'Read less' : 'Read more'}
         </Link>
@@ -151,18 +150,35 @@ export function PostCard({
         </Link>
       </CardContent>
       <CardContent orientation="horizontal" sx={{ gap: 1, flex: 1, justifyContent: 'flex-end' }}>
-        <Link sx={{ width: '1.2rem', color: '#fff' }}>
-          <IconRepeat stroke={2}/>
-        </Link>
-        <Link sx={{ width: '1.2rem', color: '#fff' }}>
-          <IconHeart stroke={2}/>
-        </Link>
-        <Link sx={{ width: '1.2rem', color: '#fff', display: 'none' }}>
+        {/* <Container disableGutters maxWidth="xs" sx={{ display: 'flex', alignItems: 'center', gap: 1, width: 'auto', margin: 0 }}>
+          <Link sx={{ width: '1.2rem', color: '#fff' }}>
+            <IconRepeat stroke={2}/>
+          </Link>
+          <Typography sx={{ fontSize: '0.75rem' }}>
+            11
+          </Typography>
+        </Container> */}
+        <Container disableGutters maxWidth="xs" sx={{ display: 'flex', alignItems: 'center', gap: 1, width: 'auto', margin: 0 }}>
+          <Link sx={{ width: '1.2rem', color: '#fff' }}>
+            <IconHeart stroke={2}/>
+          </Link>
+          <Typography sx={{ fontSize: '0.75rem' }}>
+            {likes.length}
+          </Typography>
+        </Container>
+        <Container disableGutters maxWidth="xs" sx={{ display: 'flex', alignItems: 'center', gap: 1, width: 'auto', margin: 0}}>
+          <Link sx={{ width: '1.2rem', color: '#fff' }}>
+            <IconMessageCircle stroke={2}/>
+          </Link>
+          <Typography sx={{ fontSize: '0.75rem' }}>
+            {comments.length}
+          </Typography>
+        </Container>
+
+        {/* <Link sx={{ width: '1.2rem', color: '#fff', display: 'none' }}>
           <IconHeartFilled stroke={2}/>
-        </Link>
-        <Link sx={{ width: '1.2rem', color: '#fff' }}>
-          <IconMessageCircle stroke={2}/>
-        </Link>
+        </Link> */}
+
       </CardContent>
     </Card>
   );
