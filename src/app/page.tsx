@@ -8,7 +8,7 @@ import { PostLists } from './components/post-lists';
 import { ComposePost } from './components/compose-post';
 import { postsWithDetails as structurePostsData } from '../helpers/structure-post-data'; 
 import SideBar from './components/sidebar';
-// import { NavMenu } from './components/NavMenu';
+import LateralMenu from './components/lateral-menu';
 
 export default async function Home() {
   const supabase  = await createClient();
@@ -52,17 +52,10 @@ export default async function Home() {
   const postsWithDetails = await structurePostsData(posts, likes, comments);
 
   return (
-    <main className="flex min-h-scren flex-row items-center justify-between "
+    <main className="flex min-h-scren flex-row items-start justify-around"
     >
-      <div className="flex min-h-scren flex-col items-center justify-between">
-        {/* <Box  
-          sx={{
-            borderLeft: '1px solid rgba(255, 255, 255, 0.2)',
-            borderRight: '1px solid rgba(255, 255, 255, 0.2)', 
-          }}
-        >
-          side 1
-        </Box> */}
+      <div className="flex pt-24">
+        <LateralMenu />
       </div>
       <div className="flex min-h-scren flex-col items-center justify-between">
         <Box  
@@ -84,8 +77,8 @@ export default async function Home() {
           <AuthButtonServer />
         </Box>
       </div>
-      <div className="flex min-h-scren flex-col items-center justify-between">
-    
+      <div className="flex pt-24">
+          <SideBar />
       </div>
       
     </main>
