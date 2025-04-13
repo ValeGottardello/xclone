@@ -1,11 +1,11 @@
 declare global {
   interface Window {
-    FB: any;
+    FB: unknown;
     fbAsyncInit: () => void;
   }
 }
 
 export {};
 declare module 'next/script' {
-  export const Script: any;
+  export const Script: unknown;
 }

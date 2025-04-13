@@ -2,7 +2,7 @@
 import React from 'react';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
-import { AuthButtonServer } from './components/auth-button-server';
+// import { AuthButtonServer } from './components/auth-button-server';
 import Box from '@mui/material/Box';
 import { PostLists } from './components/post-lists';
 import { ComposePost } from './components/compose-post';
