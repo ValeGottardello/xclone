@@ -2,6 +2,8 @@
 import React from "react";
 import { useState, useEffect } from 'react';
 
+import ReactionControls from './reaction-controls';
+
 import Avatar from '@mui/joy/Avatar';
 import Box from '@mui/joy/Box';
 import Card from '@mui/joy/Card';
@@ -10,11 +12,9 @@ import CardContent from '@mui/joy/CardContent';
 import Link from '@mui/joy/Link';
 import Typography from '@mui/joy/Typography';
 
-import { IconRepeat, IconHeart, IconMessageCircle } from '@tabler/icons-react';
 
 import { formatDistanceToNow } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
-import { Container } from "@mui/material";
 
 
 export function PostCard({ 
@@ -149,37 +149,7 @@ export function PostCard({
           {timeAgo}
         </Link>
       </CardContent>
-      <CardContent orientation="horizontal" sx={{ gap: 1, flex: 1, justifyContent: 'flex-end' }}>
-        {/* <Container disableGutters maxWidth="xs" sx={{ display: 'flex', alignItems: 'center', gap: 1, width: 'auto', margin: 0 }}>
-          <Link sx={{ width: '1.2rem', color: '#fff' }}>
-            <IconRepeat stroke={2}/>
-          </Link>
-          <Typography sx={{ fontSize: '0.75rem' }}>
-            11
-          </Typography>
-        </Container> */}
-        <Container disableGutters maxWidth="xs" sx={{ display: 'flex', alignItems: 'center', gap: 1, width: 'auto', margin: 0 }}>
-          <Link sx={{ width: '1.2rem', color: '#fff' }}>
-            <IconHeart stroke={2}/>
-          </Link>
-          <Typography sx={{ fontSize: '0.75rem' }}>
-            {likes.length}
-          </Typography>
-        </Container>
-        <Container disableGutters maxWidth="xs" sx={{ display: 'flex', alignItems: 'center', gap: 1, width: 'auto', margin: 0}}>
-          <Link sx={{ width: '1.2rem', color: '#fff' }}>
-            <IconMessageCircle stroke={2}/>
-          </Link>
-          <Typography sx={{ fontSize: '0.75rem' }}>
-            {comments.length}
-          </Typography>
-        </Container>
-
-        {/* <Link sx={{ width: '1.2rem', color: '#fff', display: 'none' }}>
-          <IconHeartFilled stroke={2}/>
-        </Link> */}
-
-      </CardContent>
+      <ReactionControls likes={likes} comments={comments} />
     </Card>
   );
 }

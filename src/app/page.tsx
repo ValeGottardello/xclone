@@ -44,7 +44,6 @@ export default async function Home() {
   if (commentsError || likesError) {
     console.error("ERROR",commentsError, likesError);
   }
-
   if (!user) {
     redirect("/login"); 
   }
@@ -74,7 +73,6 @@ export default async function Home() {
           <PostLists 
             posts={postsWithDetails} 
             />
-          <AuthButtonServer />
         </Box>
       </div>
       <div className="flex pt-24">
