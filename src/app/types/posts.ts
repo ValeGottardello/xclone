@@ -22,6 +22,7 @@ export type Comments = {
 };
 
 export type ReactionControlsProps = {
+    postId: string;
     likes: Array<Likes>;
     comments: Array<Comments>;
 }

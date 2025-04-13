@@ -18,6 +18,7 @@ import { toZonedTime } from 'date-fns-tz';
 
 
 export function PostCard({ 
+    postId,
     createdAt,
     userName, 
     avatarUrl,
@@ -26,6 +27,7 @@ export function PostCard({
     likes,
     comments,
 } : {
+    postId: string;
     createdAt: string;
     userName: string;
     avatarUrl: string;
@@ -149,7 +151,7 @@ export function PostCard({
           {timeAgo}
         </Link>
       </CardContent>
-      <ReactionControls likes={likes} comments={comments} />
+      <ReactionControls postId={postId} likes={likes} comments={comments} />
     </Card>
   );
 }

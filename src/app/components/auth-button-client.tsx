@@ -46,7 +46,7 @@ export function AuthButton({ user }: Props){
     const handleSignOut = async () => {
         const error = await supabase.auth.signOut()
         if (error) {
-            console.error(error);
+            console.log(error);
         }
         router.refresh();
     }
