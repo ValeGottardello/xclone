@@ -10,7 +10,7 @@ import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 
 import Link from '@mui/joy/Link';
-import Typography from '@mui/joy/Typography';
+import Typography from '@mui/material/Typography';
 
 
 import { formatDistanceToNow } from 'date-fns';
