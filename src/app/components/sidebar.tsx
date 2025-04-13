@@ -1,11 +1,11 @@
 'use client';
-import React, { useEffect, useState, useRef  } from "react";
+import React from "react";
 import Paper from '@mui/material/Paper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
 import { Box, Typography } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+// import SearchIcon from '@mui/icons-material/Search';
 
 
 // const Search = styled('div')(({ theme }) => ({
@@ -51,25 +51,25 @@ import SearchIcon from '@mui/icons-material/Search';
 // }));
   
 export default function SideBar() {
-  const [open, setOpen] = useState(false);
-  const anchorRef = useRef<HTMLButtonElement>(null);
+//   const [open, setOpen] = useState(false);
+//   const anchorRef = useRef<HTMLButtonElement>(null);
 
 
-  const [isExpanded, setIsExpanded] = useState(false); 
-  const handleReadMore = () => {
-    setIsExpanded(!isExpanded);
-  }
+//   const [isExpanded, setIsExpanded] = useState(false); 
+//   const handleReadMore = () => {
+//     setIsExpanded(!isExpanded);
+//   }
 
 
   // return focus to the button when we transitioned from !open -> open
-  const prevOpen = useRef(open);
-  useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current!.focus();
-    }
+//   const prevOpen = useRef(open);
+//   useEffect(() => {
+//     if (prevOpen.current === true && open === false) {
+//       anchorRef.current!.focus();
+//     }
 
-    prevOpen.current = open;
-  }, [open]);
+//     prevOpen.current = open;
+//   }, [open]);
 
   return (
     <>
@@ -221,13 +221,13 @@ export default function SideBar() {
                                 20.5K posts
                             </Typography>
                         </Box>
-                        <Typography
+                        {/* <Typography
                             onClick={handleReadMore} 
                             className="read-more-btn"
                             sx={{ fontSize: '0.8rem', color: '#0ea5e9', justifyContent: 'flex-end' }}
                             >
                             {isExpanded ? 'Read less' : 'Read more'}
-                        </Typography>
+                        </Typography> */}
                     </MenuItem>
                 </MenuList>
             </Paper>

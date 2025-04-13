@@ -10,6 +10,7 @@ export function PostLists({ posts }: { posts: Post[] }) {
       
         {
           posts?.map((post) => {
+            // console.log(post)
 
             const {
               id,

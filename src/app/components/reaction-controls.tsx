@@ -4,9 +4,9 @@ import { IconHeartFilled } from "@tabler/icons-react";
 import { IconMessageCircle } from "@tabler/icons-react";
 import { IconHeart } from "@tabler/icons-react";
 import { IconRepeat } from "@tabler/icons-react";
+import { ReactionControlsProps } from '../types/posts'; 
 
-
-export default function ReactionControls({ likes, comments }) {
+export default function ReactionControls({ likes, comments } : ReactionControlsProps) {
     return (
         <>
         <CardContent 

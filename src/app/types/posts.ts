@@ -20,3 +20,8 @@ export type Comments = {
     commentContent: string;
     createdAt: string;
 };
+
+export type ReactionControlsProps = {
+    likes: Array<Likes>;
+    comments: Array<Comments>;
+}

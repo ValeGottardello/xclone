@@ -6,7 +6,7 @@ import { type User} from '@supabase/supabase-js';
 import { createClient } from '@/utils/supabase/client';
 
 import { FacebookIcon, GitHubIcon } from  './icons';
-import { Container, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 
 // import { statusChangeCallback } from '@/utils/facebook-sdk';
 
