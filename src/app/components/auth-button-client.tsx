@@ -7,10 +7,13 @@ import { createClient } from '@/utils/supabase/client';
 
 import { FacebookIcon, GitHubIcon } from  './icons';
 import { Container } from '@mui/material';
+import { User as SupabaseAuthUser } from '@supabase/supabase-js';
 
 // import { statusChangeCallback } from '@/utils/facebook-sdk';
-
-export function AuthButton({ user }: { user: User | null }) {
+type Props = {
+    user: SupabaseAuthUser | null;
+  };
+export function AuthButton({ user }: Props){
     const supabase = createClient();
     const router = useRouter();
     console.log('user', user);
