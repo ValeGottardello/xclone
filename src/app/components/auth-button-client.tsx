@@ -2,7 +2,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
-import { type User} from '@supabase/supabase-js';
+// import { type User} from '@supabase/supabase-js';
 import { createClient } from '@/utils/supabase/client';
 
 import { FacebookIcon, GitHubIcon } from  './icons';
