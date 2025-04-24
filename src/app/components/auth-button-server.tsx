@@ -1,12 +1,10 @@
 import React from "react";
-import { createClient } from "@/utils/supabase/server";
 import { AuthButton } from "./auth-button-client";
+import { type AuthButtonProps } from "../types/posts";
 
+export async function AuthButtonServer({ user }: AuthButtonProps) {
 
-export async function AuthButtonServer() {
-    const supabase = await createClient();
-    const { data } = await supabase.auth.getUser();
     return (
-        <AuthButton user={data.user}/>
+        <AuthButton user={user ?? null}/>
     );
 } 

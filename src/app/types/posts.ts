@@ -1,4 +1,5 @@
-import {type Database } from './database';
+import { type Database } from './database';
+import { User as SupabaseAuthUser } from '@supabase/supabase-js';
 
 type PostEntity  = Database['public']['Tables']['posts']['Row'] 
 type UserType = Database['public']['Tables']['public_user']['Row']
@@ -25,5 +26,15 @@ export type ReactionControlsProps = {
     postId: string;
     likes: Array<Likes>;
     comments: Array<Comments>;
+    user: SupabaseAuthUser | null;
 }
 
+export type AuthButtonProps = {
+    user: SupabaseAuthUser | null;
+}
+
+export interface CustomTabPanelProps {
+    children?: React.ReactNode;
+    index: number;
+    value: number;
+  }

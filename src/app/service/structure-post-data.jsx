@@ -1,5 +1,3 @@
-
-
 export const postsWithDetails = (posts, comments, likes) => {
   const details = posts.map(post => {
         const postComments = comments.filter(comment => comment.commented_post_id === post.id);

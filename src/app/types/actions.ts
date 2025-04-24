@@ -1,7 +1,7 @@
 export interface State {
-    loading: false,
-    success: false,
-    error: null,
+    loading: boolean;
+    success: boolean;
+    error: null | string;
 }
 //set type change based on the action
 export type Action =

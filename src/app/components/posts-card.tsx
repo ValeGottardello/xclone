@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 
 import { formatDistanceToNow } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
+import { User } from "@supabase/supabase-js";
 
 
 export function PostCard({ 
@@ -26,6 +27,7 @@ export function PostCard({
     userFullName,
     likes,
     comments,
+    user,
 } : {
     postId: string;
     createdAt: string;
@@ -35,14 +37,16 @@ export function PostCard({
     userFullName: string;
     likes: Array<{ userId: string; postId: string }>;
     comments: Array<{ userId: string; postId: string; commentContent: string; createdAt: string }>;
+    user: User | null;
 }) {  
 
   const [timeAgo, setTimeAgo] = useState<string | null>(null);
+
   useEffect(() => {
     const createdAtDate = new Date(createdAt);
     const melbourneDate = toZonedTime(createdAtDate, 'Australia/Melbourne');
     setTimeAgo(formatDistanceToNow(melbourneDate, { addSuffix: true }));
-  }, [createdAt]); 
+  }, [createdAt]);
 
 
   const [isExpanded, setIsExpanded] = useState(false); 
@@ -112,13 +116,15 @@ export function PostCard({
         <Typography sx={{ fontWeight: 'lg', color: '#fff' }}>{userFullName}</Typography>
       </CardContent>
       <CardContent>
-        <Typography
-          variant="subtitle1"
-          component="div"
-          sx={{ color: '#fff', fontSize: '0.75rem'}}
-        >
-          @{userName}
-        </Typography>
+        <Link href={`/profile/${userName}`} sx={{ textDecoration: 'none' }}>
+          <Typography
+            variant="subtitle1"
+            component="div"
+            sx={{ color: '#fff', fontSize: '0.75rem'}}
+          >
+            @{userName}
+          </Typography>
+        </Link>
         <Typography 
            sx={{
             color: '#fff',
@@ -148,10 +154,10 @@ export function PostCard({
           underline="none"
           sx={{ fontSize: '10px', color: 'text.tertiary', my: 0.5, justifyContent: 'flex-end' }}
         >
-          {timeAgo}
+          <span>{timeAgo ?? '...'}</span>
         </Link>
       </CardContent>
-      <ReactionControls postId={postId} likes={likes} comments={comments} />
+      <ReactionControls postId={postId} likes={likes} comments={comments}  user={user ?? null}/>
     </Card>
   );
 }

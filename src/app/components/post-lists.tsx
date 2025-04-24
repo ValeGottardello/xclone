@@ -2,8 +2,9 @@
 import React from 'react';
 import { PostCard } from './posts-card';
 import { type Post } from "../types/posts";
+import { User } from '@supabase/supabase-js';
 
-export function PostLists({ posts }: { posts: Post[] }) {
+export function PostLists({ posts, user }: { posts: Post[], user: User | undefined }) {
 
     return (
       <>
@@ -29,6 +30,7 @@ export function PostLists({ posts }: { posts: Post[] }) {
             return (
               <PostCard
                 key={id}
+                postId={id}
                 createdAt={createdAt}
                 userName={username}
                 avatarUrl={avatarUrl}
@@ -36,6 +38,7 @@ export function PostLists({ posts }: { posts: Post[] }) {
                 userFullName={name}
                 likes={post.likes}
                 comments={post.comments}
+                user={user ?? null}
               />
             )
           })
