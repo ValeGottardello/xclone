@@ -4,37 +4,51 @@ import { User as SupabaseAuthUser } from '@supabase/supabase-js';
 type PostEntity  = Database['public']['Tables']['posts']['Row'] 
 type UserType = Database['public']['Tables']['public_user']['Row']
 
-export type Post = PostEntity & {
-    public_user : UserType
-    likes: Array<Likes>;
-    comments: Array<Comments>;
-};
-
+// export type Post = PostWithDetails[] | [];
+export type PostWithDetails = PostEntity & {
+    public_user: UserType;
+    likes: Likes[];
+    comments: Comments[];
+}
 export type Likes = {
-    userId: string;
-    postId: string;
-};
-
+    id: number;
+    post_id: string | null;
+    user_id: string;
+    public_user: {
+        id: string;
+        username: string;
+        avatar_url: string;
+    };
+}
 export type Comments = {
-    userId: string;
-    postId: string;
-    commentContent: string;
-    createdAt: string;
+    commented_post_id: string;
+    comment_content: string;
+    created_at: string | null;
+    public_user: {
+        id: string | '';
+        username: string | '';
+        avatar_url: string | '';
+    };
 };
 
 export type ReactionControlsProps = {
     postId: string;
     likes: Array<Likes>;
     comments: Array<Comments>;
-    user: SupabaseAuthUser | null;
+    currentUser: SupabaseAuthUser | null;
 }
 
 export type AuthButtonProps = {
-    user: SupabaseAuthUser | null;
+    currentUser: SupabaseAuthUser | null;
 }
 
 export interface CustomTabPanelProps {
     children?: React.ReactNode;
     index: number;
     value: number;
-  }
+}
+
+export interface PostComponentProps {
+    currentUser: SupabaseAuthUser | null;
+    posts: PostWithDetails[];
+}

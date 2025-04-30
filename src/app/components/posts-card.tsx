@@ -16,28 +16,31 @@ import Typography from '@mui/material/Typography';
 import { formatDistanceToNow } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 import { User } from "@supabase/supabase-js";
+import { Comments, Likes } from "../types/posts";
 
 
 export function PostCard({ 
     postId,
     createdAt,
     userName, 
+    userId,
     avatarUrl,
     postContent,
     userFullName,
     likes,
     comments,
-    user,
+    currentUser,
 } : {
     postId: string;
     createdAt: string;
     userName: string;
+    userId: string;
     avatarUrl: string;
     postContent: string;
     userFullName: string;
-    likes: Array<{ userId: string; postId: string }>;
-    comments: Array<{ userId: string; postId: string; commentContent: string; createdAt: string }>;
-    user: User | null;
+    likes: Likes[];
+    comments: Comments[];
+    currentUser: User | null;
 }) {  
 
   const [timeAgo, setTimeAgo] = useState<string | null>(null);
@@ -89,7 +92,7 @@ export function PostCard({
           }}
         >
           <Link
-            href={`/profile/${userName}`}
+            href={`/profile?user_id=${userId}`}
             sx={{
               display: 'block',
               position: 'relative',
@@ -116,7 +119,7 @@ export function PostCard({
         <Typography sx={{ fontWeight: 'lg', color: '#fff' }}>{userFullName}</Typography>
       </CardContent>
       <CardContent>
-        <Link href={`/profile/${userName}`} sx={{ textDecoration: 'none' }}>
+        <Link href={`/profile?user_id=${userId}`} sx={{ textDecoration: 'none' }}>
           <Typography
             variant="subtitle1"
             component="div"
@@ -157,7 +160,7 @@ export function PostCard({
           <span>{timeAgo ?? '...'}</span>
         </Link>
       </CardContent>
-      <ReactionControls postId={postId} likes={likes} comments={comments}  user={user ?? null}/>
+      <ReactionControls postId={postId} likes={likes} comments={comments}  currentUser={currentUser ?? null}/>
     </Card>
   );
 }

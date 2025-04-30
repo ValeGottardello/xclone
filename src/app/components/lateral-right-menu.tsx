@@ -9,7 +9,7 @@ import { Box, Typography } from '@mui/material';
 
 
   
-export default function SideBar() {
+export default function LateralRightMenu() {
 
   return (
     <>

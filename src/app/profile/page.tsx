@@ -1,40 +1,50 @@
+// 'use client'
 import React from 'react';
 import { redirect } from 'next/navigation';
 import { AuthButtonServer } from '../components/auth-button-server';
-import LateralMenu from '../components/lateral-menu';
+import LateralMenu from '../components/lateral-left-menu';
 import { Avatar, Box, Tab, Tabs } from '@mui/material';
 import SearchBar from '../components/search-bar';
-import SideBar from '../components/sidebar';
-import { getUserPosts } from '../service/getPosts';
+import SideBar from '../components/lateral-right-menu';
+import { getUserPosts } from '../service/get-posts';
 import MyPostsComponent from '../components/my-posts';
 import UserPostsComponent from '../components/my-posts';
+import LateralLeftMenu from '../components/lateral-left-menu';
+import LateralRightMenu from '../components/lateral-right-menu';
+import { ComposePost } from '../components/compose-post';
+import { createClient } from '@/utils/supabase/server';
 
-export default async function MyProfile({ params }: { params: { id: string } }) {
-    const userId = params.id || "";
-    const { postsWithDetails, user, redirectToLogin } = await getUserPosts(userId);
+export default async function UserProfile({ searchParams }: { searchParams: { user_id: string } }) {
+    const profileUserId = await searchParams?.user_id || "";
+    console.log("params", searchParams?.user_id);
+    let { postsWithDetails, currentUser , redirectToLogin } = await getUserPosts({ profileUserId });
 
+
+    console.log("postsWithDetails", postsWithDetails);
     if (redirectToLogin) {
-        redirect("/login");
+      console.log(postsWithDetails, currentUser , redirectToLogin);
+        // redirect("/login");
     }
   
     return (
         <main className="flex min-h-scren flex-row items-start justify-around"
            >
              <div className="flex flex-col gap-10 pt-20">
-               <AuthButtonServer user={user ?? null} />
-               <LateralMenu />
+               <AuthButtonServer currentUser={currentUser ?? null} />
+               <LateralLeftMenu currentUser={currentUser ?? null} />
              </div>
              <div 
              style={{
               borderLeft: '1px solid rgba(255, 255, 255, 0.2)', 
               borderRight: '1px solid rgba(255, 255, 255, 0.2)', 
               minHeight: '100vh',
+              maxWidth: '600px',
+              minWidth: '600px',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              // justifyContent: 'space-between',
               gap: '3rem',
-              maxWidth: '600px',
               }}>
                <Box
                  sx={{
@@ -43,12 +53,20 @@ export default async function MyProfile({ params }: { params: { id: string } }) 
                    display: 'flex',
                    flexDirection: 'column',
                    alignItems: 'center', 
-                   backgroundColor: '#CFD9DD',
+                  //  backgroundImage: postsWithDetails[0]?.public_user?.avatar_url
+                  //  ? `url(${postsWithDetails[0]?.public_user?.avatar_url})`
+                  //  : 'none',                  
+                  //  backgroundColor: postsWithDetails[0]?.public_user?.avatar_url
+                  //    ? 'transparent'
+                  //    : '#1a202c', 
+                  backgroundColor: '#1a202c', 
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
                  }}
                >
                   <Avatar
-                      src={user?.user_metadata?.picture ? user?.user_metadata?.picture : user?.user_metadata?.avatar_url}
-                      alt={user?.user_metadata?.user_name}
+                      src={postsWithDetails[0]?.public_user?.avatar_url}
+                      alt={postsWithDetails[0]?.public_user?.username}
                       sx={{ 
                         position: 'absolute',
                         top: '18%',
@@ -63,16 +81,53 @@ export default async function MyProfile({ params }: { params: { id: string } }) 
                     />
                </Box>
                <UserPostsComponent 
+                  currentUser={currentUser}
                   posts={postsWithDetails} 
-                  user={user}
                   />
-             </div>
+             </div> 
              <div className="flex flex-col gap-10 pt-20">
                  <SearchBar />
-                 <SideBar />
+                 <LateralRightMenu />
              </div>
              
            </main>
     )
 }
 
+// type PostWithDetails = {
+//   content: string;
+//   created_at: string;
+//   id: string;
+//   user_id: string;
+// } & {
+//   public_user: UserType;
+//   likes: Likes[];
+//   comments: Comments[];
+// }
+// //type UserType = {
+//   avatar_url: string;
+//   created_at: string;
+//   id: string;
+//   name: string;
+//   username: string;
+// }
+// type Likes = {
+//   id: number;
+//   post_id: string;
+//   user_id: string;
+//   public_user: {
+//       id: string;
+//       username: string;
+//       avatar_url: string;
+//   };
+// }
+// type Comments = {
+//   commented_post_id: string;
+//   comment_content: string;
+//   created_at: string | null;
+//   public_user: {
+//       id: string;
+//       username: string;
+//       avatar_url: string;
+//   };
+// }

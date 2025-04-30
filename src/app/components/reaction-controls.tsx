@@ -9,29 +9,29 @@ import { ReactionControlsProps } from '../types/posts';
 import { createClient } from '@/utils/supabase/client';
 
 
-export default function ReactionControls({ postId, likes, comments, user} : ReactionControlsProps) {
+export default function ReactionControls({ postId, likes, comments, currentUser} : ReactionControlsProps) {
     const [isLiked, setIsLiked] = useState(false);
     const supabase = createClient();
 
     useEffect(() => {
       console.log('likes', likes);
       console.log('isLiked', isLiked);
-        if (user?.id) {
-          const isLiked = likes.some((like) => like.userId === user?.id);
+        if (currentUser?.id) {
+          const isLiked = likes.some((like) => like.public_user.id === currentUser.id);
           setIsLiked(isLiked);
         }
-    }, [user, likes]);
+    }, [currentUser, likes]);
 
 
     const handleLike = async () => {
-        const userId =  user?.id; 
+        const userId =  currentUser?.id; 
         if (!userId) {
             console.log('User not authenticated');
             return;
         }
 
         try {
-          const { error } = await supabase.from('likes').insert({ user_id: user.id, post_id: postId });
+          const { error } = await supabase.from('likes').insert({ user_id: currentUser.id, post_id: postId });
           if (error) {
               console.error(error);
               return;

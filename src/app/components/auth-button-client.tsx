@@ -8,7 +8,7 @@ import { Container } from '@mui/material';
 import { type AuthButtonProps } from '../types/posts';
 
 
-export function AuthButton({ user } : AuthButtonProps){
+export function AuthButton({ currentUser } : AuthButtonProps){
     const supabase = createClient();
     const router = useRouter();
 
@@ -42,7 +42,7 @@ export function AuthButton({ user } : AuthButtonProps){
     return (
         <>
             {
-                !user ? (
+                !currentUser ? (
                     <>
                     <Container className="flex flex-row gap-2">
 

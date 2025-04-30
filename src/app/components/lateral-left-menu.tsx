@@ -7,8 +7,10 @@ import Stack from '@mui/material/Stack';
 import { Container } from '@mui/material';
 import Link from 'next/link';
 import { HomeIcon, ProfileIcon, XIcon } from './icons';
+import { AuthButtonProps } from '../types/posts';
 
-export default function LateralMenu() {
+export default function LateralLeftMenu({ currentUser }: AuthButtonProps) {
+
   return (
     <Container
     sx={{
@@ -53,7 +55,7 @@ export default function LateralMenu() {
               Home
             </MenuItem>
           </Link>
-          <Link href="/profile">
+          <Link  href={`/profile?user_id=${currentUser?.id}`}>
             <MenuItem>
               <ProfileIcon />
               Profile
