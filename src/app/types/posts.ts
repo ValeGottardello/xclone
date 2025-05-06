@@ -7,10 +7,10 @@ type UserType = Database['public']['Tables']['public_user']['Row']
 // export type Post = PostWithDetails[] | [];
 export type PostWithDetails = PostEntity & {
     public_user: UserType;
-    likes: Likes[];
-    comments: Comments[];
+    likes: Like[];
+    comments: Comment[];
 }
-export type Likes = {
+export type Like = {
     id: number;
     post_id: string | null;
     user_id: string;
@@ -20,7 +20,7 @@ export type Likes = {
         avatar_url: string;
     };
 }
-export type Comments = {
+export type Comment = {
     commented_post_id: string;
     comment_content: string;
     created_at: string | null;
@@ -33,8 +33,8 @@ export type Comments = {
 
 export type ReactionControlsProps = {
     postId: string;
-    likes: Array<Likes>;
-    comments: Array<Comments>;
+    likes: Like[];
+    comments: Comment[];
     currentUser: SupabaseAuthUser | null;
 }
 

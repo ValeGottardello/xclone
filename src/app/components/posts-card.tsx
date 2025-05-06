@@ -12,11 +12,10 @@ import CardContent from '@mui/joy/CardContent';
 import Link from '@mui/joy/Link';
 import Typography from '@mui/material/Typography';
 
-
 import { formatDistanceToNow } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 import { User } from "@supabase/supabase-js";
-import { Comments, Likes } from "../types/posts";
+import { Like, Comment } from "../types/posts";
 
 
 export function PostCard({ 
@@ -38,8 +37,8 @@ export function PostCard({
     avatarUrl: string;
     postContent: string;
     userFullName: string;
-    likes: Likes[];
-    comments: Comments[];
+    likes: Like[];
+    comments: Comment[];
     currentUser: User | null;
 }) {  
 

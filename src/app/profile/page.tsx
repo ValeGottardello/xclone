@@ -6,7 +6,7 @@ import LateralMenu from '../components/lateral-left-menu';
 import { Avatar, Box, Tab, Tabs } from '@mui/material';
 import SearchBar from '../components/search-bar';
 import SideBar from '../components/lateral-right-menu';
-import { getUserPosts } from '../service/get-posts';
+import { getUserPosts } from '../service/posts-ss';
 import MyPostsComponent from '../components/my-posts';
 import UserPostsComponent from '../components/my-posts';
 import LateralLeftMenu from '../components/lateral-left-menu';
@@ -16,14 +16,10 @@ import { createClient } from '@/utils/supabase/server';
 
 export default async function UserProfile({ searchParams }: { searchParams: { user_id: string } }) {
     const profileUserId = await searchParams?.user_id || "";
-    console.log("params", searchParams?.user_id);
     let { postsWithDetails, currentUser , redirectToLogin } = await getUserPosts({ profileUserId });
 
-
-    console.log("postsWithDetails", postsWithDetails);
     if (redirectToLogin) {
-      console.log(postsWithDetails, currentUser , redirectToLogin);
-        // redirect("/login");
+        redirect("/login");
     }
   
     return (

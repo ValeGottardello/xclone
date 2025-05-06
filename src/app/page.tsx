@@ -5,7 +5,7 @@ import { PostLists } from './components/post-lists';
 import { ComposePost } from './components/compose-post';
 import SearchBar from './components/search-bar';
 import { AuthButtonServer } from './components/auth-button-server';
-import { getPosts } from './service/get-posts';
+import { getPosts } from './service/posts-ss';
 import { redirect } from "next/navigation";
 import LateralLeftMenu from './components/lateral-left-menu';
 import LateralRightMenu from './components/lateral-right-menu';

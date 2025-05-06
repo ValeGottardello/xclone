@@ -27,7 +27,9 @@ export default function UserPostsComponent({ currentUser, posts } : PostComponen
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
+                {currentUser?.id === posts[0].public_user.id && (
                 <ComposePost avatarURL={currentUser?.user_metadata?.avatar_url} />
+                )}
                 <PostLists 
                 posts={posts}
                 currentUser={currentUser} 

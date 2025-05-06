@@ -6,40 +6,50 @@ import { IconMessageCircle } from "@tabler/icons-react";
 import { IconHeart } from "@tabler/icons-react";
 import { IconRepeat } from "@tabler/icons-react";
 import { ReactionControlsProps } from '../types/posts'; 
-import { createClient } from '@/utils/supabase/client';
+import { insertLike, removeLike } from "../service/likes-cs";
 
 
 export default function ReactionControls({ postId, likes, comments, currentUser} : ReactionControlsProps) {
-    const [isLiked, setIsLiked] = useState(false);
-    const supabase = createClient();
+    const [isLikedByCurrentUser, setIsLikedByCurrentUser] = useState(false);
 
     useEffect(() => {
-      console.log('likes', likes);
-      console.log('isLiked', isLiked);
         if (currentUser?.id) {
           const isLiked = likes.some((like) => like.public_user.id === currentUser.id);
-          setIsLiked(isLiked);
+          setIsLikedByCurrentUser(isLiked);
         }
     }, [currentUser, likes]);
 
 
     const handleLike = async () => {
+
+      console.log('handleLike', isLikedByCurrentUser);
         const userId =  currentUser?.id; 
-        if (!userId) {
-            console.log('User not authenticated');
-            return;
+        if (!userId) return;
+
+        if (isLikedByCurrentUser) {
+          try {
+            const { error } = await removeLike(userId, postId)
+            if (error) {
+                console.error(error);
+                return;
+            }
+            setIsLikedByCurrentUser(false);
+          } catch (error) {
+            console.error('Error liking post:', error);
+          } 
+        } else {
+          try {
+            const { error } = await insertLike(userId, postId)
+            if (error) {
+                console.error(error);
+                return;
+            }
+            setIsLikedByCurrentUser(true);
+          } catch (error) {
+            console.error('Error liking post:', error);
+          } 
         }
 
-        try {
-          const { error } = await supabase.from('likes').insert({ user_id: currentUser.id, post_id: postId });
-          if (error) {
-              console.error(error);
-              return;
-          }
-          setIsLiked(isLiked);
-        } catch (error) {
-          console.error('Error liking post:', error);
-        } 
     }
 
 
@@ -58,17 +68,11 @@ export default function ReactionControls({ postId, likes, comments, currentUser}
             </Typography>
           </Container>
           <Container disableGutters maxWidth="xs" sx={{ display: 'flex', alignItems: 'center', gap: 1, width: 'auto', margin: 0 }}>
-            {!isLiked ? (
               <Link sx={{ width: '1.2rem', color: '#fff' }} onClick={handleLike}>
-                <IconHeart stroke={2}/>
+              {!isLikedByCurrentUser ?  <IconHeart stroke={2}/> : <IconHeartFilled stroke={2}/>}
               </Link>
-            ) : (
-              <Link sx={{ width: '1.2rem', color: '#fff'}}>
-                <IconHeartFilled stroke={2}/>
-              </Link>
-            )}
             <Typography sx={{ fontSize: '0.75rem' }}>
-              {likes.length}
+              {likes ? likes.length : 0}
             </Typography>
           </Container>
           <Container disableGutters maxWidth="xs" sx={{ display: 'flex', alignItems: 'center', gap: 1, width: 'auto', margin: 0}}>
@@ -76,7 +80,7 @@ export default function ReactionControls({ postId, likes, comments, currentUser}
               <IconMessageCircle stroke={2}/>
             </Link>
             <Typography sx={{ fontSize: '0.75rem' }}>
-              {comments.length}
+              {comments ? comments.length : 0}
             </Typography>
           </Container>
         </CardContent>
