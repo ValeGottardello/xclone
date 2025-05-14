@@ -25,3 +25,26 @@ export async function insertLike(userId : string ,  postId : string) {
     };
 }
 
+export async function fetchLikes(postId : string) {
+    const supabase = await createClient();
+    console.log(postId)
+
+    const { data: likes, error: likesError } = await supabase.from('likes')
+    .select(`
+            id,
+            post_id,
+            user_id,
+            public_user:public_user!likes_user_id_fkey (
+                id,
+                username,
+                avatar_url
+            )
+            `)
+    .eq('post_id', postId)
+    
+    return {
+        likes,
+        likesError
+    };
+}
+

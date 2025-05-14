@@ -31,12 +31,7 @@ export type Comment = {
     };
 };
 
-export type ReactionControlsProps = {
-    postId: string;
-    likes: Like[];
-    comments: Comment[];
-    currentUser: SupabaseAuthUser | null;
-}
+
 
 export type AuthButtonProps = {
     currentUser: SupabaseAuthUser | null;

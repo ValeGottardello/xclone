@@ -2,17 +2,12 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
 import { AuthButtonServer } from '../components/auth-button-server';
-import LateralMenu from '../components/lateral-left-menu';
 import { Avatar, Box, Tab, Tabs } from '@mui/material';
 import SearchBar from '../components/search-bar';
-import SideBar from '../components/lateral-right-menu';
 import { getUserPosts } from '../service/posts-ss';
-import MyPostsComponent from '../components/my-posts';
 import UserPostsComponent from '../components/my-posts';
 import LateralLeftMenu from '../components/lateral-left-menu';
 import LateralRightMenu from '../components/lateral-right-menu';
-import { ComposePost } from '../components/compose-post';
-import { createClient } from '@/utils/supabase/server';
 
 export default async function UserProfile({ searchParams }: { searchParams: { user_id: string } }) {
     const profileUserId = await searchParams?.user_id || "";
@@ -89,41 +84,3 @@ export default async function UserProfile({ searchParams }: { searchParams: { us
            </main>
     )
 }
-
-// type PostWithDetails = {
-//   content: string;
-//   created_at: string;
-//   id: string;
-//   user_id: string;
-// } & {
-//   public_user: UserType;
-//   likes: Likes[];
-//   comments: Comments[];
-// }
-// //type UserType = {
-//   avatar_url: string;
-//   created_at: string;
-//   id: string;
-//   name: string;
-//   username: string;
-// }
-// type Likes = {
-//   id: number;
-//   post_id: string;
-//   user_id: string;
-//   public_user: {
-//       id: string;
-//       username: string;
-//       avatar_url: string;
-//   };
-// }
-// type Comments = {
-//   commented_post_id: string;
-//   comment_content: string;
-//   created_at: string | null;
-//   public_user: {
-//       id: string;
-//       username: string;
-//       avatar_url: string;
-//   };
-// }

@@ -1,10 +1,9 @@
 'use client'
 import React from "react";
 import { CustomTabPanelProps, PostWithDetails, PostComponentProps } from "../types/posts";
-import { Box, Card, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import { SyntheticEvent, useState } from "react";
 import { PostLists } from "./post-lists";
-import { User } from "@supabase/supabase-js";
 import { ComposePost } from "./compose-post";
 
 export default function UserPostsComponent({ currentUser, posts } : PostComponentProps) {
