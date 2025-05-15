@@ -2,18 +2,38 @@
 import React from "react";
 import { Avatar } from "@mui/material";
 import { ComposePostButton } from "./compose-post-button";
-import { addComment } from "../actions/add-comment-action";
+import { addComment, fetchComments } from "../service/comments-cs";
 
 export function ComposeComment ({
-    avatarURL
+    currentUserId,
+    avatarURL, 
+    postId,
+    setCommentsState
 } : {
-    avatarURL: string
+    currentUserId: string | null,
+    avatarURL: string,
+    postId: string,
+    setCommentsState: React.Dispatch<React.SetStateAction<any[] | []>>
 }) {
 
     const formRef = React.useRef<HTMLFormElement>(null);
     return (
         <form ref={formRef} action={async(formData) => {
+            if(!currentUserId) return;
+
+            formData.append('currentUserId', currentUserId); 
+            formData.append('postId', postId); 
+            formData.append('content', formData.get('content') as string); 
+            
             await addComment(formData)
+            const { comments, commentsError } = await fetchComments(postId);
+            if (commentsError) {
+                console.error(commentsError);
+                return;
+            }
+            if (comments) {
+                setCommentsState(comments);
+            }
             formRef.current?.reset();
         }} className="flex flex-row gap-y-4 p-4 w-full space-x-4 border-b border-white/20">
             <Avatar

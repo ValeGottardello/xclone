@@ -1,10 +1,10 @@
 import { User } from "@supabase/supabase-js";
 import { ComposeComment } from "./compose-comment";
 
-export function CommentBar ({ currentUser }: { currentUser: User | null }) {
+export function CommentBar ({ currentUser, postId }: { currentUser: User | null, postId: string }) {
     return (
         <div>
-            <ComposeComment avatarURL={currentUser?.user_metadata.avatar_url || ''} />
+            <ComposeComment currentUserId={currentUser?.id ?? null} avatarURL={currentUser?.user_metadata.avatar_url || ''} postId={postId} />
         </div>
     )
 }

@@ -82,6 +82,7 @@ export default function ReactionControls({ postId, likes, comments, currentUser,
         console.log(likesState)
 
     }
+    
     return (
         <>
         <CardContent 

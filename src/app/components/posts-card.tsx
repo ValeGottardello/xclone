@@ -19,7 +19,7 @@ import { Like, Comment } from "../types/posts";
 import { Modal } from "@mui/material";
 import { ModalClose, Sheet } from "@mui/joy";
 import { CommentBar } from "./comment-bar";
-
+import { useRouter } from "next/navigation";
 
 export function PostCard({ 
     postId,
@@ -44,7 +44,6 @@ export function PostCard({
     comments: Comment[];
     currentUser: User | null;
 }) {  
-
   const [timeAgo, setTimeAgo] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -54,6 +53,10 @@ export function PostCard({
     setTimeAgo(formatDistanceToNow(melbourneDate, { addSuffix: true }));
   }, [createdAt]);
 
+  const router = useRouter(); 
+  const handleNavigateToPost = () => {
+    router.push(`/post-details?post_id=${postId}`);
+  };
 
   const [isExpanded, setIsExpanded] = useState(false); 
   const handleReadMore = () => {
@@ -61,117 +64,117 @@ export function PostCard({
   }
 
   const handleComment = () => {
-    // console.log('handleComment');
     console.log('open', open);
     setOpen(!open);
   }
 
   return (
     <>
-    <Card
-    sx={{
-      backgroundColor: 'transparent', 
-      border: 'transparent',
-      boxShadow: 'none',
-      display: 'flex',
-      '&:hover': {
-        backgroundColor: '#919fb61b', 
-      },
-      transition: 'all 0.2s ease-in-out', 
-      borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-      borderRadius: '0px', 
-      cursor: 'pointer',
-      width: '100%', 
-    }}
-    >
-      <CardContent orientation="horizontal" sx={{ alignItems: 'center', gap: 1 }}>
-        <Box
-          sx={{
-            position: 'relative',
-            objectFit: 'cover',
-            '&::before': {
-              content: '""',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-              m: '-2px',
-              borderRadius: '50%',
-            },
-          }}
-        >
-          <Link
-            href={`/profile?user_id=${userId}`}
+      <Card
+      onClick={handleNavigateToPost}
+      sx={{ 
+        backgroundColor: 'transparent', 
+        border: 'transparent',
+        boxShadow: 'none',
+        display: 'flex',
+        '&:hover': {
+          backgroundColor: '#919fb61b', 
+        },
+        transition: 'all 0.2s ease-in-out', 
+        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+        borderRadius: '0px', 
+        cursor: 'pointer',
+        width: '100%', 
+      }}
+      >
+        <CardContent orientation="horizontal" sx={{ alignItems: 'center', gap: 1 }}>
+          <Box
             sx={{
-              display: 'block',
               position: 'relative',
-              zIndex: 1,
-              borderRadius: '50%',
-              overflow: 'hidden',
+              objectFit: 'cover',
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 0,
+                m: '-2px',
+                borderRadius: '50%',
+              },
             }}
-          >  
-            <Avatar
-              src={avatarUrl}
-              alt={userName}
-              variant="soft"
-              sx={{ 
-                width: '48px',  
-                height: '48px', 
+          >
+            <Link
+              href={`/profile?user_id=${userId}`}
+              sx={{
+                display: 'block',
+                position: 'relative',
+                zIndex: 1,
                 borderRadius: '50%',
                 overflow: 'hidden',
-                objectFit: 'contain',
               }}
+            >  
+              <Avatar
+                src={avatarUrl}
+                alt={userName}
+                variant="soft"
+                sx={{ 
+                  width: '48px',  
+                  height: '48px', 
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  objectFit: 'contain',
+                }}
 
-            />
+              />
+            </Link>
+          </Box>
+          <Typography sx={{ fontWeight: 'lg', color: '#fff' }}>{userFullName}</Typography>
+        </CardContent>
+        <CardContent>
+          <Link href={`/profile?user_id=${userId}`} sx={{ textDecoration: 'none' }}>
+            <Typography
+              variant="subtitle1"
+              component="div"
+              sx={{ color: '#fff', fontSize: '0.75rem'}}
+            >
+              @{userName}
+            </Typography>
           </Link>
-        </Box>
-        <Typography sx={{ fontWeight: 'lg', color: '#fff' }}>{userFullName}</Typography>
-      </CardContent>
-      <CardContent>
-        <Link href={`/profile?user_id=${userId}`} sx={{ textDecoration: 'none' }}>
-          <Typography
-            variant="subtitle1"
-            component="div"
-            sx={{ color: '#fff', fontSize: '0.75rem'}}
+          <Typography 
+            sx={{
+              color: '#fff',
+              fontSize: '0.875rem', 
+              lineHeight: '1.5', 
+              overflow: 'hidden', 
+              textOverflow: 'ellipsis', 
+              display: '-webkit-box',
+              WebkitLineClamp: isExpanded ? 'none' : 2, 
+              WebkitBoxOrient: 'vertical', 
+            }}
           >
-            @{userName}
+            {postContent}
           </Typography>
-        </Link>
-        <Typography 
-           sx={{
-            color: '#fff',
-            fontSize: '0.875rem', 
-            lineHeight: '1.5', 
-            overflow: 'hidden', 
-            textOverflow: 'ellipsis', 
-            display: '-webkit-box',
-            WebkitLineClamp: isExpanded ? 'none' : 2, 
-            WebkitBoxOrient: 'vertical', 
-          }}
-        >
-          {postContent}
-        </Typography>
-        <Link
-          component="button"
-          underline="none"
-          startDecorator="…"
-          onClick={handleReadMore} 
-          className="read-more-btn"
-          sx={{ fontSize: 'sm', color: '#0ea5e9', justifyContent: 'flex-end' }}
-        >
-          {isExpanded ? 'Read less' : 'Read more'}
-        </Link>
-        <Link
-          component="button"
-          underline="none"
-          sx={{ fontSize: '10px', color: 'text.tertiary', my: 0.5, justifyContent: 'flex-end' }}
-        >
-          <span>{timeAgo ?? '...'}</span>
-        </Link>
-      </CardContent>
-      <ReactionControls postId={postId} likes={likes} comments={comments}  currentUser={currentUser ?? null}   handleComment={handleComment}/>
-    </Card>
+          <Link
+            component="button"
+            underline="none"
+            startDecorator="…"
+            onClick={handleReadMore} 
+            className="read-more-btn"
+            sx={{ fontSize: 'sm', color: '#0ea5e9', justifyContent: 'flex-end' }}
+          >
+            {isExpanded ? 'Read less' : 'Read more'}
+          </Link>
+          <Link
+            component="button"
+            underline="none"
+            sx={{ fontSize: '10px', color: 'text.tertiary', my: 0.5, justifyContent: 'flex-end' }}
+          >
+            <span>{timeAgo ?? '...'}</span>
+          </Link>
+        </CardContent>
+        <ReactionControls postId={postId} likes={likes} comments={comments}  currentUser={currentUser ?? null}   handleComment={handleComment}/>
+      </Card>
    {/* Modal */}
     {open && (
     <Modal
@@ -281,7 +284,7 @@ export function PostCard({
                   {isExpanded ? 'Read less' : 'Read more'}
                 </Link>
               </CardContent>
-              <CommentBar currentUser={currentUser ?? null} />
+              <CommentBar currentUser={currentUser ?? null} postId={postId}/>
         </Card> 
         </Sheet>
     </Modal>
